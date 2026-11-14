@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Time Capsule</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --gold:#e8c77b;
+  --cream:#f8eedb;
+  --muted:#b9b2a5;
+  --navy:#101a2b;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; color:var(--cream);
+  font-family:'Cairo',sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 0%,#263650 0%,transparent 55%),
+    linear-gradient(145deg,#080d17,#111b2c 60%,#090e18);
+  overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background-image:radial-gradient(#e8c77b55 1px,transparent 1px);
+  background-size:37px 37px;opacity:.25;
+}
+main{width:min(680px,92%);margin:auto;padding:35px 0 60px;position:relative}
+header{text-align:center;margin:12px 0 35px}
+.eyebrow{color:var(--gold);letter-spacing:4px;font-size:11px}
+h1{
+  font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,52px);
+  color:var(--gold);margin:12px 0 4px;letter-spacing:2px;
+}
+.subtitle{color:var(--muted);font-size:14px}
+.line{height:1px;width:75px;background:var(--gold);margin:20px auto}
+.card{
+  background:linear-gradient(145deg,#ffffff0c,#ffffff04);
+  border:1px solid #e8c77b44;border-radius:22px;
+  padding:27px 22px;box-shadow:0 18px 60px #0005;
+  backdrop-filter:blur(8px);
+}
+.screen{display:none;animation:appear .65s ease}
+.screen.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+h2{color:var(--gold);font-size:23px;margin:0 0 12px}
+p{line-height:2;color:#e3ddcf;font-size:15px}
+.center{text-align:center}
+.symbol{font-size:48px;margin:10px}
+button{
+  display:block;width:100%;border:1px solid var(--gold);
+  background:linear-gradient(120deg,#e8c77b,#b68b43);
+  color:#151b25;border-radius:12px;padding:13px 18px;
+  font-family:'Cairo',sans-serif;font-weight:800;font-size:15px;
+  margin-top:20px;cursor:pointer;transition:.2s;
+}
+button:active{transform:scale(.98)}
+input{
+  width:100%;padding:14px;border-radius:10px;
+  border:1px solid #e8c77b88;background:#0b1321;
+  color:white;font-family:'Cairo',sans-serif;font-size:16px;
+  text-align:center;margin-top:12px;outline:none;
+}
+input:focus{border-color:var(--gold)}
+.hint{font-size:12px;color:var(--muted);margin-top:13px}
+.feedback{min-height:28px;color:var(--gold);font-size:13px;margin-top:10px}
+.progress{display:flex;gap:7px;margin:0 0 20px}
+.progress span{height:3px;flex:1;background:#ffffff20;border-radius:5px}
+.progress span.done{background:var(--gold)}
+.letter-box{
+  direction:ltr;display:flex;justify-content:center;flex-wrap:wrap;
+  gap:9px;margin:20px 0;
+}
+.letter{
+  background:#e8c77b18;border:1px solid #e8c77b77;
+  padding:9px 12px;border-radius:8px;color:var(--gold);font-size:20px;
+}
+.final-message{white-space:pre-line;text-align:right;line-height:2.15}
+.final-message p{margin:0 0 16px}
+.signature{color:var(--gold);text-align:center;font-size:22px;margin-top:24px}
+footer{text-align:center;color:#8c8c91;font-size:11px;margin-top:30px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="eyebrow">A SPECIAL BIRTHDAY EXPERIENCE</div>
+  <h1>A LITTLE TIME CAPSULE</h1>
+  <div class="subtitle">A journey through a few unforgettable memories</div>
+  <div class="line"></div>
+</header>
+
+<div class="progress" id="progress">
+  <span class="done"></span><span></span><span></span><span></span>
+</div>
+
+<section class="screen active card center" id="s0">
+  <div class="symbol">🗝️</div>
+  <h2>أهلًا بيك في رحلة صغيرة</h2>
+  <p>قدامك كام لغز، وكل لغز هيفتحلك باب لذكرى قديمة.<br>خد وقتك وفكر كويس... مستعد؟</p>
+  <button onclick="startGame()">ابدأ الرحلة</button>
+</section>
+
+<section class="screen card" id="s1">
+  <h2>المرحلة الأولى — البداية</h2>
+  <p>كل حكاية ليها بداية... وبدايتنا كانت في لعبة، قضينا فيها وقت وضحكنا واتعرفنا من خلالها.</p>
+  <p class="center" style="color:var(--gold)">تفتكر كانت إيه اللعبة؟</p>
+  <input id="a1" placeholder="اكتب إجابتك هنا">
+  <div class="feedback" id="f1"></div>
+  <button onclick="check(1)">تأكيد الإجابة</button>
+</section>
+
+<section class="screen card" id="s2">
+  <h2>المرحلة الثانية — كلمة مميزة</h2>
+  <p>في كلمة كانت بتتكرر بينا كتير، كلمة بسيطة، بس ليها طابع خاص وبتفكرنا بإفيه مشترك.</p>
+  <p class="center" style="color:var(--gold);font-size:22px">إيه هي الكلمة؟</p>
+  <input id="a2" placeholder="اكتب الكلمة">
+  <div class="feedback" id="f2"></div>
+  <button onclick="check(2)">تأكيد الإجابة</button>
+</section>
+
+<section class="screen card" id="s3">
+  <h2>المرحلة الثالثة — فك الشفرة</h2>
+  <p>الحروف دي متلخبطة... رتبها علشان توصل لكلمة من الكلمات الخاصة اللي بينا.</p>
+  <div class="letter-box">
+    <span class="letter">ل</span><span class="letter">ي</span>
+    <span class="letter">ك</span><span class="letter">ر</span>
+    <span class="letter">و</span><span class="letter">س</span>
+    <span class="letter">ب</span><span class="letter">ا</span>
+  </div>
+  <input id="a3" placeholder="رتب الحروف واكتب الكلمة">
+  <div class="feedback" id="f3"></div>
+  <button onclick="check(3)">فك الشفرة</button>
+</section>
+
+<section class="screen card" id="s4">
+  <h2>المرحلة الرابعة — الكنز الحقيقي</h2>
+  <p>بعد كل المراحل دي، إيه الحاجة اللي بتفضل معانا حتى لو الأماكن اتغيرت والطرق اتفرقت؟</p>
+  <input id="a4" placeholder="اكتب إجابتك">
+  <div class="feedback" id="f4"></div>
+  <button onclick="check(4)">تأكيد الإجابة</button>
+</section>
+
+<section class="screen card center" id="s5">
+  <div class="symbol">🔐</div>
+  <h2>وصلت للخزنة الأخيرة</h2>
+  <p>جمّع عدد الحروف في الإجابات الثلاث الأولى:</p>
+  <p style="color:var(--gold)">PUBG + ابسروكلي + حلو</p>
+  <p>استخدم الأرقام دي بالترتيب لفتح الخزنة.</p>
+  <input id="vault" inputmode="numeric" maxlength="3" placeholder="•••">
+  <div class="feedback" id="fv"></div>
+  <button onclick="openVault()">افتح الخزنة</button>
+</section>
+
+<section class="screen card" id="s6">
+  <div class="center">
+    <div class="symbol">🎂</div>
+    <h2>كل سنة وإنت طيب</h2>
+    <p>فيه رسالة أخيرة مستنياك...</p>
+    <div class="line"></div>
+  </div>
+  <div class="final-message" id="message"></div>
+  <div class="signature">Happy Birthday ❤️</div>
+</section>
+
+<footer>A LITTLE TIME CAPSULE · MADE WITH APPRECIATION</footer>
+</main>
+
+<script>
+let current=0;
+const messages=[
+"يمكن تكون دي آخر مرحلة في اللعبة، بس الحقيقة إن في حاجات ملهاش نهاية، حتى لو الأيام أخدتها في طريق تاني.",
+"عايزة أقولك إنك من الأشخاص الجميلة والمميزة اللي قابلتهم في حياتي، وإنك شخص غالي عندي أكتر ما تتخيل.",
+"إنت شخص طيب أوي، وجدع، وحنين، وفيك تفاصيل كتير تخلي أي حد يعرفك يحمد ربنا إن في حياته شخص زيك. ويا بخت أي حد عنده حد بقلبك وبأصلك وبجمال روحك.",
+"يمكن اتخنقنا، ويمكن اختلفنا، ويمكن في وقت ما كل واحد فينا كمل طريقه بعيد عن التاني، بس ده عمره ما هيخليني أنكر إن كان بينا أيام وذكريات جميلة بجد.",
+"وهتفضل من الذكريات اللي بحب أرجعلها من وقت للتاني، وأبتسم، وأفصل بيها شوية عن دوشة الدنيا. ذكريات ليها مكانتها الخاصة، ومش محتاجة تتكرر عشان تفضل حلوة.",
+"مش كل شخص بنقابله بيكون مجرد مرحلة عابرة، في أشخاص بيسيبوا جوانا أثر حلو بيفضل معانا، وإنت من الناس دي.",
+"في يوم ميلادك، أتمنى لك من قلبي إن الحياة تكون حنينة عليك قد طيبة قلبك، وإنك تفضل ناجح ومبسوط ومحقق كل اللي نفسك فيه، وإنك تلاقي دايمًا ناس تقدّرك وتعرف قيمتك وتديك من الحنية والجدعنة اللي بتديهُم للي حواليك.",
+"كل سنة وإنت طيب، وكل سنة وإنت شخص جميل ومميز زي ما إنت.",
+"ويا بخت الدنيا بالناس اللي زيك. ❤️"
+];
+
+function startGame(){show(1)}
+function show(n){
+ document.getElementById('s'+current).classList.remove('active');
+ current=n;
+ document.getElementById('s'+current).classList.add('active');
+ const bars=document.querySelectorAll('.progress span');
+ bars.forEach((b,i)=>b.classList.toggle('done',i<=Math.min(n-1,3)));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function normalize(v){
+ return v.trim().toLowerCase().replace(/\s/g,'').replace(/[أإآ]/g,'ا');
+}
+function check(n){
+ const value=normalize(document.getElementById('a'+n).value);
+ const answers={
+  1:['pubg','بوبجي','ببجي'],
+  2:['حلو'],
+  3:['ابسروكلي'],
+  4:['الذكريات','ذكريات']
+ };
+ const ok=answers[n].some(a=>normalize(a)===value);
+ const feedback=document.getElementById('f'+n);
+ if(ok){feedback.textContent='إجابة صحيحة! 🎉';setTimeout(()=>show(n+1),650)}
+ else{feedback.textContent='مش دي الإجابة... فكر تاني 😉'}
+}
+function openVault(){
+ const v=document.getElementById('vault').value.trim();
+ if(v==='483'){
+  show(6);
+  typeMessage();
+ }else{
+  document.getElementById('fv').textContent='الخزنة لسه مقفولة... جرب تاني 🔎';
+ }
+}
+function typeMessage(){
+ const target=document.getElementById('message');
+ let p=0;
+ function next(){
+  if(p>=messages.length)return;
+  const para=document.createElement('p');
+  target.appendChild(para);
+  const words=messages[p].split('');
+  let i=0;
+  function type(){
+   if(i<words.length){
+    para.textContent+=words[i++];
+    setTimeout(type,24);
+   }else{
+    p++;setTimeout(next,400);
+   }
+  }
+  type();
+ }
+ next();
+}
+</script>
+</body>
+</html>
